@@ -20,27 +20,27 @@ kind: ImageStream
 metadata:
   annotations:
     description: Keeps track of changes in the application image
-  name: php-test-git
+  name: rdr-test-git
 spec: {}
 ...
 ---
 kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
-  name: php-test-git
+  name: rdr-test-git
   labels:
-    app: php-test-git
-    app.kubernetes.io/component: php-test-git
-    app.kubernetes.io/instance: php-test-git
+    app: rdr-test-git
+    app.kubernetes.io/component: rdr-test-git
+    app.kubernetes.io/instance: rdr-test-git
     app.kubernetes.io/name: php
-    app.kubernetes.io/part-of: php-test-git-app
+    app.kubernetes.io/part-of: rdr-test-git-app
     app.openshift.io/runtime: php
 spec:
   nodeSelector: null
   output:
     to:
       kind: ImageStreamTag
-      name: 'php-test-git:latest'
+      name: 'rdr-test-git:latest'
   resources: {}
   successfulBuildsHistoryLimit: 5
   failedBuildsHistoryLimit: 5
@@ -64,13 +64,13 @@ spec:
 kind: DeploymentConfig
 apiVersion: apps.openshift.io/v1
 metadata:
-  name: php-test-git
+  name: rdr-test-git
   labels:
-    app: php-test-git
-    app.kubernetes.io/component: php-test-git
-    app.kubernetes.io/instance: php-test-git
+    app: rdr-test-git
+    app.kubernetes.io/component: rdr-test-git
+    app.kubernetes.io/instance: rdr-test-git
     app.kubernetes.io/name: php
-    app.kubernetes.io/part-of: php-test-git-app
+    app.kubernetes.io/part-of: rdr-test-git-app
     app.openshift.io/runtime: php
 spec:
   strategy:
@@ -88,30 +88,30 @@ spec:
       imageChangeParams:
         automatic: true
         containerNames:
-          - php-test-git
+          - rdr-test-git
         from:
           kind: ImageStreamTag
-          name: 'php-test-git:latest'
+          name: 'rdr-test-git:latest'
     - type: ConfigChange
   replicas: 1
   revisionHistoryLimit: 10
   test: false
   selector:
-    app: php-test-git
-    deploymentconfig: php-test-git
+    app: rdr-test-git
+    deploymentconfig: rdr-test-git
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: php-test-git
-        deploymentconfig: php-test-git
+        app: rdr-test-git
+        deploymentconfig: rdr-test-git
     spec:
       volumes:
         - name: webroot-mount
           persistentVolumeClaim:
             claimName: webroot
       containers:
-        - name: php-test-git
+        - name: rdr-test-git
           ports:
             - containerPort: 8080
               protocol: TCP
@@ -134,13 +134,13 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: php-test-git
+  name: rdr-test-git
   labels:
-    app: php-test-git
-    app.kubernetes.io/component: php-test-git
-    app.kubernetes.io/instance: php-test-git
+    app: rdr-test-git
+    app.kubernetes.io/component: rdr-test-git
+    app.kubernetes.io/instance: rdr-test-git
     app.kubernetes.io/name: php
-    app.kubernetes.io/part-of: php-test-git-app
+    app.kubernetes.io/part-of: rdr-test-git-app
     app.openshift.io/runtime: php
 spec:
   ports:
@@ -153,8 +153,8 @@ spec:
       port: 8443
       targetPort: 8443
   selector:
-    app: php-test-git
-    deploymentconfig: php-test-git
+    app: rdr-test-git
+    deploymentconfig: rdr-test-git
   type: ClusterIP
   sessionAffinity: None
 ...
@@ -162,18 +162,18 @@ spec:
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
-  name: php-test-git
+  name: rdr-test-git
   labels:
-    app: php-test-git
-    app.kubernetes.io/component: php-test-git
-    app.kubernetes.io/instance: php-test-git
+    app: rdr-test-git
+    app.kubernetes.io/component: rdr-test-git
+    app.kubernetes.io/instance: rdr-test-git
     app.kubernetes.io/name: php
-    app.kubernetes.io/part-of: php-test-git-app
+    app.kubernetes.io/part-of: rdr-test-git-app
     app.openshift.io/runtime: php
 spec:
   to:
     kind: Service
-    name: php-test-git
+    name: rdr-test-git
     weight: 100
   port:
     targetPort: 8080-tcp
